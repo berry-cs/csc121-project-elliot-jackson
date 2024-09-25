@@ -12,7 +12,7 @@ public class AppTemplate extends PApplet {	// <----- 1. rename AppTemplate every
     }
     
     public void setup() {
-        //w = new WORLD(..........)   	<----- 2. create your initial world object
+        w = new World(175, 0);   //	<----- 2. create your initial world object
     }
     
     public void draw() {
