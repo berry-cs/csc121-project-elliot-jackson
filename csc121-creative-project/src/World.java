@@ -37,9 +37,7 @@ public class World implements IWorld{
 	
 	public PApplet draw(PApplet w) {
 		w.background(255); // white background
-		w.fill(0, 0, 255); // solid blue
-		w.rect(this.x, this.y, 30, 15); 
-		
+		w.fill(0, 0, 255); // solid blue	
 		for(Note n : notes) {
 			n.draw(w);
 		}
