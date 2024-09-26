@@ -1,15 +1,24 @@
+import java.util.ArrayList;
 import java.util.Objects;
 
 import processing.core.PApplet;
+import processing.event.KeyEvent;
+import processing.event.MouseEvent;
 
 
 public class World implements IWorld{
 	int x;
 	int y;
 	
+	ArrayList<Note> notes;
+	
 	public World(int x, int y) {
 		this.x = x;
 		this.y = y;
+		
+		notes = new ArrayList<Note>();
+		notes.add(new Note(50,200));
+		
 	}
 	
 	public int hashCode() {
@@ -30,20 +39,35 @@ public class World implements IWorld{
 		w.background(255); // white background
 		w.fill(0, 0, 255); // solid blue
 		w.rect(this.x, this.y, 30, 15); 
+		
+		for(Note n : notes) {
+			n.draw(w);
+		}
+		
 		return w;
 	}
 	
 	public IWorld update(){
+		
+		for(Note n : notes) {
+			n.update();
+		}
+		
+		/*
 		if (this.y < 400) {
 			return new World(this.x, this.y + 1);
 		}
 		else {
 			return this;
 		}
+		*/
+		return this;
 	}
 	
-	public IWorld mousePressed() {
-		return null;
-		
+	public IWorld mousePressed(MouseEvent mev) {
+		System.out.println("press");
+		notes.remove(0);
+		notes.add(new Note(50,200));
+		return this;
 	}
 }
