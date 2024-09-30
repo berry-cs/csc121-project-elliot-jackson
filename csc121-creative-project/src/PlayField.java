@@ -26,6 +26,8 @@ public class PlayField {
 		for(Note n : notes) {
 			n.update();
 		}
+		cullNotes();
+		System.out.println(notes.size());
 	}
 	
 	public void draw(PApplet p) {
@@ -42,5 +44,13 @@ public class PlayField {
 	public void randomNote() {
 		int s = (int)(Math.random() * (3 + 1));
 		notes.add(spawners[s].spawn());
+	}
+	
+	/** Culls notes by iterating over ArrayList backwards */
+	private void cullNotes() {
+		for(int i = notes.size() - 1; i >= 0; i--) {
+			if (notes.get(i).shouldCull)
+				notes.remove(i);
+		}
 	}
 }

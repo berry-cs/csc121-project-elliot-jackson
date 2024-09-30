@@ -1,16 +1,23 @@
 import processing.core.PApplet;
 
 public class Note {
-	HitBox loc;
-	float speed;
+	private HitBox loc;
+	private float speed;
+	
+	public boolean shouldCull;
 	
 	public Note(float centerX, float centerY) {
 		loc = HitBox.newByCenter(centerX, centerY, 20, 20);
 		speed = 1;
+		shouldCull = false;
 	}
 	
 	public void update() {
 		loc.addY(-speed);
+		
+		if(loc.y() < -20) {
+			shouldCull = true;
+		}
 	}
 	
 	public void draw(PApplet p) {
