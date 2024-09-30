@@ -67,6 +67,11 @@ public class HitBox {
 		return (x > 0) && (y > 0) && (x < sizeX) && (y < sizeY);
 	}
 	
+	/** Returns true if this is contained by the provided hitbox */
+	public boolean containedBy(HitBox hb) {
+		return hb.isInside(locX, locY) && hb.isInside(locX + sizeX, locY + sizeY);
+	}
+	
 	public void draw(PApplet p) {
 		p.noFill();
 		p.rect(locX, locY, sizeX, sizeY);
