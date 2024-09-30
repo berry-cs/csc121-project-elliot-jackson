@@ -8,11 +8,11 @@ public class AppTemplate extends PApplet {	// <----- 1. rename AppTemplate every
     IWorld w;
     
     public void settings() {
-        this.size(400, 400);
+        this.size(800, 600);
     }
     
     public void setup() {
-        w = new World(175, 0);   //	<----- 2. create your initial world object
+        w = new World();   //	<----- 2. create your initial world object
     }
     
     public void draw() {
