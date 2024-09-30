@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Objects;
 
 import processing.core.PApplet;
@@ -8,10 +9,12 @@ import processing.event.MouseEvent;
 public class World implements IWorld{
 	
 	PlayField pf;
+	KeyManager km;
 	
 	public World() {
 		
-		pf = new PlayField(5,5);
+		km = new KeyManager();
+		pf = new PlayField(5,5, km);
 	}
 	
 	public int hashCode() {
@@ -42,6 +45,16 @@ public class World implements IWorld{
 	
 	public IWorld mousePressed(MouseEvent mev) {
 		pf.randomNote();
+		return this;
+	}
+	
+	public IWorld keyPressed(KeyEvent kev) {
+		km.press(kev.getKey());
+		return this;
+	}
+
+	public IWorld keyReleased(KeyEvent kev) {
+		km.release(kev.getKey());
 		return this;
 	}
 }
