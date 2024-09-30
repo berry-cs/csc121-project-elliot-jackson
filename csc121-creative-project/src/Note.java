@@ -3,13 +3,23 @@ import processing.core.PApplet;
 public class Note {
 	private HitBox loc;
 	private float speed;
+	private int track;
 	
 	public boolean shouldCull;
 	
-	public Note(float centerX, float centerY) {
+	public Note(float centerX, float centerY, int track) {
 		loc = HitBox.newByCenter(centerX, centerY, 20, 20);
 		speed = 1;
+		this.track = track;
 		shouldCull = false;
+	}
+	
+	public void cull() {
+		shouldCull = true;
+	}
+	
+	public boolean containedBy(HitBox hb) {
+		return loc.containedBy(hb);
 	}
 	
 	public void update() {
@@ -23,6 +33,10 @@ public class Note {
 	public void draw(PApplet p) {
 		p.fill(255,255,0);
 		p.rect(loc.x(), loc.y(), 20, 20);
+	}
+	
+	public int track() {
+		return track;
 	}
 	
 }
