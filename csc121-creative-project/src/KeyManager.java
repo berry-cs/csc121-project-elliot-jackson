@@ -2,12 +2,13 @@ public class KeyManager {
 	private String noteKeys = "asdf";
 	private boolean[] notePress = {false,false,false,false};
 	private boolean space = false;
+	private boolean spacePressed = false;
 	
 	public KeyManager() {}
 
 
 	public void press(char c) {
-		if (c == ' ') space = true;
+		if (c == ' ' && !spacePressed) spacePressed = space = true;
 		
 		int i = noteKeys.indexOf(c);
 		if(i < 0) return;
@@ -15,7 +16,7 @@ public class KeyManager {
 	}
 	
 	public void release(char c) {
-		if (c == ' ') space = false;
+		if (c == ' ') spacePressed = false;
 		
 		int i = noteKeys.indexOf(c);
 		if(i < 0) return;
@@ -28,7 +29,7 @@ public class KeyManager {
 	}
 	
 	public boolean isSpacePressed() {
-		boolean s = space;
+		boolean s = space && spacePressed;
 		space = false;
 		return s;
 	}
