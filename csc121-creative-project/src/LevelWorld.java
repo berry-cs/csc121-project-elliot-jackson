@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Objects;
 
 import processing.core.PApplet;
@@ -6,15 +5,17 @@ import processing.event.KeyEvent;
 import processing.event.MouseEvent;
 
 
-public class World implements IWorld{
+public class LevelWorld implements IWorld{
 	
 	PlayField pf;
 	KeyManager km;
+	double speed;
 	
-	public World() {
+	public LevelWorld() {
 		
 		km = new KeyManager();
 		pf = new PlayField(5,5, km);
+		speed = 1;
 	}
 	
 	public int hashCode() {
@@ -28,7 +29,7 @@ public class World implements IWorld{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		World other = (World) obj;
+		LevelWorld other = (LevelWorld) obj;
 		return Objects.equals(pf, other.pf);
 	}
 	
@@ -39,7 +40,7 @@ public class World implements IWorld{
 	}
 	
 	public IWorld update(){
-		pf.update();
+		pf.update(); 
 		return this;
 	}
 	
@@ -49,6 +50,9 @@ public class World implements IWorld{
 	}
 	
 	public IWorld keyPressed(KeyEvent kev) {
+		if (kev.getKey() == 'p') {
+			return new PauseWorld(this);
+		}
 		km.press(kev.getKey());
 		return this;
 	}
