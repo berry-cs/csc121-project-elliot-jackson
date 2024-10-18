@@ -66,6 +66,13 @@ public class HitBox {
 		y = y - locY;
 		return (x > 0) && (y > 0) && (x < sizeX) && (y < sizeY);
 	}
+	public boolean touching(HitBox hb) {
+		return hb.isInside(locX, locY) 
+			|| hb.isInside(locX+sizeX, locY)
+			|| hb.isInside(locX, locY+sizeY)
+			|| hb.isInside(locX+sizeX, locY+sizeY);
+			
+	}
 	
 	/** Returns true if this is contained by the provided hitbox */
 	public boolean containedBy(HitBox hb) {
