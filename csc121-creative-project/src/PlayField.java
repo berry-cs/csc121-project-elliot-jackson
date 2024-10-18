@@ -5,6 +5,7 @@ import processing.core.PApplet;
 public class PlayField {
 	HitBox loc;
 	HitBox strumBar;
+	HitBox missed;
 	NoteSpawner spawners[] = {null, null, null, null};
 	ArrayList<Note> notes;
 	
@@ -12,7 +13,8 @@ public class PlayField {
 	
 	public PlayField(float locX, float locY, KeyManager km) {
 		loc = new HitBox(locX, locY, 300, 555);
-		strumBar = new HitBox(loc.x(), loc.y(), loc.width(), 100);
+		strumBar = new HitBox(loc.x(), loc.y()+15, loc.width(), 30);
+		missed = new HitBox(loc.x(), loc.y()+5, loc.width(), 10);
 		notes = new ArrayList<Note>();
 		this.km = km;
 		
@@ -28,13 +30,19 @@ public class PlayField {
 		
 		for(Note n : notes) {
 			n.update();
+			if (n.touching(missed) && !n.missed) {
+				n.missed = true;
+				
+			}
 		}
+		
 		cullNotes();
 	}
 	
 	public void draw(PApplet p) {
 		loc.draw(p);
 		strumBar.draw(p);
+		missed.draw(p);
 		for(int i = 0; i < 4; i++) {
 			spawners[i].draw(p);
 		}

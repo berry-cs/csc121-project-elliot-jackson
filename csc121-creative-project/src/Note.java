@@ -6,12 +6,14 @@ public class Note {
 	private int track;
 	
 	public boolean shouldCull;
+	public boolean missed;
 	
 	public Note(float centerX, float centerY, int track) {
 		loc = HitBox.newByCenter(centerX, centerY, 20, 20);
 		speed = 1;
 		this.track = track;
 		shouldCull = false;
+		missed = false;
 	}
 	
 	public void cull() {
@@ -20,6 +22,9 @@ public class Note {
 	
 	public boolean containedBy(HitBox hb) {
 		return loc.containedBy(hb);
+	}
+	public boolean touching(HitBox hb) {
+		return loc.touching(hb);
 	}
 	
 	public void update() {
@@ -32,6 +37,7 @@ public class Note {
 	
 	public void draw(PApplet p) {
 		p.fill(255,255,0);
+		if (missed) p.fill(255,0,0);
 		p.rect(loc.x(), loc.y(), 20, 20);
 	}
 	
