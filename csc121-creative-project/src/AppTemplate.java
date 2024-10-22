@@ -16,7 +16,11 @@ public class AppTemplate extends PApplet {	// <----- 1. rename AppTemplate every
     }
     
     public void draw() {
-        w = w.update();
+    	// If state 1
+    	// ... just render a start screeen
+    	
+    	// if state 2
+    	w = w.update();
         w.draw(this);
     }
     

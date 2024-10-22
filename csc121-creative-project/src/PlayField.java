@@ -6,7 +6,7 @@ public class PlayField {
 	HitBox loc;
 	HitBox strumBar;
 	HitBox missed;
-	NoteSpawner spawners[] = {null, null, null, null};
+	HitBox spawners[] = {null, null, null, null};
 	ArrayList<Note> notes;
 	
 	KeyManager km;
@@ -21,7 +21,8 @@ public class PlayField {
 		/** Generate Spawners */
 		for(int i = 0; i < 4; i++) {
 			float x = (loc.width() / 5)* i + (loc.width() / 5);
-			spawners[i] = new NoteSpawner(x, loc.height()-50, i);
+			//spawners[i] = new NoteSpawner(x, loc.height()-50, i);
+			spawners[i] = new HitBox(x, loc.height()-50, 50, 50);
 		}
 	}
 	
@@ -53,7 +54,7 @@ public class PlayField {
 	
 	public void randomNote() {
 		int s = (int)(Math.random() * (3 + 1));
-		notes.add(spawners[s].spawn());
+		notes.add(new Note(spawners[s].centerX(), spawners[s].centerY(), s));
 	}
 	
 	private void strum() {
