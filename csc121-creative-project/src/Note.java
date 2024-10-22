@@ -9,7 +9,7 @@ public class Note {
 	public boolean missed;
 	
 	public Note(float centerX, float centerY, int track) {
-		loc = HitBox.newByCenter(centerX, centerY, 20, 20);
+		loc = new HitBox(centerX-10,centerY-10,20,20);
 		speed = 1;
 		this.track = track;
 		shouldCull = false;
@@ -23,6 +23,7 @@ public class Note {
 	public boolean containedBy(HitBox hb) {
 		return loc.containedBy(hb);
 	}
+
 	public boolean touching(HitBox hb) {
 		return loc.touching(hb);
 	}

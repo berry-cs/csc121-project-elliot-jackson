@@ -15,21 +15,7 @@ public class HitBox {
 		this.sizeX = sizeX;
 		this.sizeY = sizeY;
 	}
-	
-	public HitBox(float locX, float locY ,float size) {
-		this.locX = locX;
-		this.locY = locY;
-		this.sizeX = size;
-		this.sizeY = size;
-	}
-	
-	/** Creates a hitbox at the specified center */
-	public static HitBox newByCenter(float centerX, float centerY, float sizeX, float sizeY) {
-		float locX = centerX - (sizeX/2);
-		float locY = centerY - (sizeY/2);
-		return new HitBox(locX, locY, sizeX, sizeY);
-	}
-	
+
 	/** Getters */
 	public float x() {
 		return locX;
@@ -61,16 +47,22 @@ public class HitBox {
 	}
 	
 	/** Returns true if point is inside hitbox */
+	
 	public boolean isInside(float x, float y) {
 		x = x - locX;
 		y = y - locY;
-		return (x > 0) && (y > 0) && (x < sizeX) && (y < sizeY);
+		return (x >= 0) && (y >= 0) && (x <= sizeX) && (y <= sizeY);
 	}
+
 	public boolean touching(HitBox hb) {
 		return hb.isInside(locX, locY) 
 			|| hb.isInside(locX+sizeX, locY)
 			|| hb.isInside(locX, locY+sizeY)
-			|| hb.isInside(locX+sizeX, locY+sizeY);
+			|| hb.isInside(locX+sizeX, locY+sizeY)
+			|| this.isInside(hb.x(), hb.y())
+			|| this.isInside(hb.x()+hb.width(), hb.y())
+			|| this.isInside(hb.x(), hb.y()+hb.height())
+			|| this.isInside(hb.x()+hb.width(), hb.y()+hb.height());
 			
 	}
 	
