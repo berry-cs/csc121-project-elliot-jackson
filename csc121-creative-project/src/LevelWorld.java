@@ -14,7 +14,8 @@ public class LevelWorld implements IWorld{
 	public LevelWorld() {
 		
 		km = new KeyManager();
-		pf = new PlayField(km);
+		pf = new PlayField(NoteQueue.loadFile(), km);
+		pf.start();
 		speed = 1;
 	}
 	
@@ -45,7 +46,6 @@ public class LevelWorld implements IWorld{
 	}
 	
 	public IWorld mousePressed(MouseEvent mev) {
-		pf.randomNote();
 		return this;
 	}
 	
