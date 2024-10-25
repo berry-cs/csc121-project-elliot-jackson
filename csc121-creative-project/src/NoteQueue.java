@@ -9,28 +9,12 @@ public class NoteQueue {
 		index = 0;
 	}
 	
-	public static NoteQueue loadFile() {
-		NoteQueue nq = new NoteQueue();
-		
-			nq.add(0, 1000);
-			nq.add(1, 1000);
-			nq.add(2, 2000);
-			nq.add(3, 2000);
-		
-		
-		for(int i = 5; i<200; i++) {
-			nq.add(i%4, 1000*i);
-		}
-		
-		return nq;
-	}
-	
 	public void reset() {
 		index = 0;
 	}
 	
 	public boolean next() {
-		if (index < notes.size()-2) {
+		if (index < notes.size()-1) {
 			index++;
 			return true;
 		} else {
@@ -39,21 +23,23 @@ public class NoteQueue {
 	}
 	
 	public int curTrack() {
+		//System.out.println("curTrack: " + notes.get(index).track);
 		return notes.get(index).track;
 	}
 	
-	public int curTime() {
+	public long curTime() {
+		//System.out.println("curTrack: " + notes.get(index).time);
 		return notes.get(index).time;
 	}
 	
-	public void add(int track, int time) {
+	public void add(int track, long time) {
 		notes.add(new NoteInfo(track, time));
 	}
 	
 	private class NoteInfo {
 		int track;
-		int time;
-		NoteInfo(int track, int time) {
+		long time;
+		NoteInfo(int track, long time) {
 			this.track = track;
 			this.time = time;
 		}
