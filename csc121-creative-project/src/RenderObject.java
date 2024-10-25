@@ -8,6 +8,37 @@ public interface RenderObject {
 	public void render();
 }
 
+class RenderList implements RenderObject {
+	ArrayList<RenderObject> list;
+	PApplet p;
+	
+	RenderList(PApplet p) {
+		this.p = p;
+		list = new ArrayList<RenderObject>();
+	}
+	
+	// Adding an existing RenderObject
+	void add(RenderObject ro) {
+		list.add(ro);
+	}
+	
+	// Create and add an image from filename
+	void createAdd(String filename, int width, int height) {
+		this.add(new image(p, filename, width, height));
+	}
+	
+	// Create and add a notesRenderer from ArrayList of Note objects
+	void createAdd(ArrayList<Note> notes) {
+		this.add(new notesRenderer(p, notes));
+	}
+	
+	public void render() {
+		for(RenderObject ro : list) {
+			ro.render();
+		}
+	}
+}
+
 
 class hitBoxRenderer implements RenderObject {
 	PApplet p;
@@ -24,6 +55,7 @@ class hitBoxRenderer implements RenderObject {
 	}
 }
 
+
 class notesRenderer implements RenderObject {
 	PApplet p;
 	ArrayList<Note> notes;
@@ -33,6 +65,7 @@ class notesRenderer implements RenderObject {
 		this.p = p;
 		this.notes = notes;
 		
+		// Load note images from data
 		for(int i=0; i<4; i++) {
 			ro[i] = new image(p,"data/images/"+Integer.toString(i)+"-note.png", Note.SIZE, Note.SIZE);
 		}
@@ -41,33 +74,6 @@ class notesRenderer implements RenderObject {
 	public void render() {
 		for(Note n : notes) {
 			ro[n.track()].render(n.x(), n.y());
-		}
-	}
-}
-
-
-class listRO implements RenderObject {
-	ArrayList<RenderObject> list;
-	PApplet p;
-	
-	listRO(PApplet p) {
-		this.p = p;
-		list = new ArrayList<RenderObject>();
-	}
-	
-	void add(RenderObject ro) {
-		list.add(ro);
-	}
-	
-	void add(ArrayList<RenderObject> l) {
-		for(RenderObject ro : l) {
-			list.add(ro);
-		}
-	}
-	
-	public void render() {
-		for(RenderObject ro : list) {
-			ro.render();
 		}
 	}
 }
@@ -82,12 +88,7 @@ class image implements RenderObject {
 		img = p.loadImage(filename);
 		img.resize(width, height);
 	}
-	
-	image(PApplet p, String filename) {
-		this.p = p;
-		img = p.loadImage(filename);
-	}
-	
+
 	public void render() {
 		p.image(img, 0, 0);
 	}

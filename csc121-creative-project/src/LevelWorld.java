@@ -22,10 +22,10 @@ public class LevelWorld implements IWorld{
 		km = new KeyManager();
 		pf = new PlayField(s, km);
 		
-		listRO renderList = new listRO(p);
-		renderList.add(new image(p, "data/images/playfield_bottom.png", p.width, p.height));
-		renderList.add(new notesRenderer(p, pf.getNoteArray()));
-		renderList.add(new image(p, "data/images/playfield_top.png", p.width, p.height));
+		RenderList renderList = new RenderList(p);
+		renderList.createAdd("data/images/playfield_bottom.png", p.width, p.height);
+		renderList.createAdd(pf.getNoteArray());
+		renderList.createAdd("data/images/playfield_top.png", p.width, p.height);
 		gameRender = renderList;
 		
 		pf.start();
