@@ -8,8 +8,10 @@ public class Note {
 	public boolean shouldCull;
 	public boolean missed;
 	
+	final static int SIZE = 20;
+	
 	public Note(float centerX, float centerY, int track) {
-		loc = new HitBox(centerX-10,centerY-10,20,20);
+		loc = new HitBox(centerX-(SIZE/2),centerY-(SIZE/2),SIZE,SIZE);
 		speed = 1;
 		this.track = track;
 		shouldCull = false;
@@ -31,7 +33,7 @@ public class Note {
 	public void update() {
 		loc.addY(-speed);
 		
-		if(loc.y() < -20) {
+		if(loc.y() < -SIZE) {
 			shouldCull = true;
 		}
 	}
@@ -39,7 +41,7 @@ public class Note {
 	public void draw(PApplet p) {
 		p.fill(255,255,0);
 		if (missed) p.fill(255,0,0);
-		p.rect(loc.x(), loc.y(), 20, 20);
+		p.rect(loc.x(), loc.y(), SIZE, SIZE);
 	}
 	
 	public int track() {

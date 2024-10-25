@@ -14,7 +14,7 @@ public class LevelWorld implements IWorld{
 	public LevelWorld() {
 		
 		km = new KeyManager();
-		pf = new PlayField(5,5, km);
+		pf = new PlayField(km);
 		speed = 1;
 	}
 	
@@ -35,7 +35,7 @@ public class LevelWorld implements IWorld{
 	
 	public PApplet draw(PApplet p) {
 		p.background(200);
-		pf.draw(p);
+		pf.render(p);
 		return p;
 	}
 	
