@@ -25,12 +25,8 @@ public class Note {
 		shouldCull = true;
 	}
 	
-	public boolean containedBy(HitBox hb) {
-		return loc.containedBy(hb);
-	}
-
-	public boolean touching(HitBox hb) {
-		return loc.touching(hb);
+	public HitBox loc() {
+		return this.loc;
 	}
 	
 	public void update(long curTime) {

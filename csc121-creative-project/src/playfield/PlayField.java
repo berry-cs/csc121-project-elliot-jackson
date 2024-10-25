@@ -70,7 +70,7 @@ public class PlayField {
 		
 		for(Note n : notes) {
 			n.update(runningTime);
-			if (n.touching(missed) && !n.missed) n.missed = true;
+			if (n.loc().touching(missed) && !n.missed) n.cull();
 		}
 		
 		spawnNotes();
@@ -91,7 +91,7 @@ public class PlayField {
 		for(Note n : notes) {
 			int track = n.track();
 			if (!km.isNotePressed(track)) continue;
-			if (n.containedBy(strumBar)) {
+			if (n.loc().containedBy(strumBar)) {
 				n.cull();
 			}
 		}
