@@ -9,6 +9,7 @@ public class PlayField {
 	HitBox strumBar;
 	HitBox missed;
 	ArrayList<Note> notes;
+	Song song;
 	KeyManager km;
 	NoteQueue nq;
 	
@@ -26,13 +27,15 @@ public class PlayField {
 	boolean running = false;	// Blocks the execution of update()
 	long startTime;				// Initialized during start()
 	long runningTime;			// Initialized at the start of update()
+	long stopTime = -1;			// The time in ms the PlayField should stop updating. Is set when NoteQueue's end is reached  
 	
 	// Note Speed information
-	float timeDelta = 5000;		// The time in ms it takes for a note to reach strumBar from spawn
+	long timeDelta = 5000;		// The time in ms it takes for a note to reach strumBar from spawn
 	float noteDelta;			// The distance from spawn to strumBar (initialized in constructor)
 	
-	public PlayField(NoteQueue nq, KeyManager km) {
-		this.nq = nq;
+	public PlayField(Song s, KeyManager km) {
+		this.song = s;
+		this.nq = s.nq;
 		this.km = km;
 		
 		loc 		= new HitBox(XPOS, YPOS, 	WIDTH, HEIGHT);
@@ -55,12 +58,14 @@ public class PlayField {
 	public void start() {
 		running = true;
 		startTime = System.currentTimeMillis();
+		nq.reset();
 	}
 	
 	public void update() {
 		if (!running) return;
-		
 		runningTime = System.currentTimeMillis()-startTime;
+		
+		if (runningTime > stopTime && stopTime != -1) running = false;
 		
 		if(km.isSpacePressed()) strum();
 		
@@ -73,17 +78,16 @@ public class PlayField {
 		cullNotes();
 	}
 	
+	
 	public void render(PApplet p) {
 		loc.draw(p);
 		strumBar.draw(p);
 		missed.draw(p);
-		for(int i = 0; i < 4; i++) {
-			//spawners[i].draw(p);
-		}
 		for(Note n : notes) {
 			n.draw(p);
 		}
 	}
+	
 
 	/* PRIVATE HELPER METHODS */
 	
@@ -99,13 +103,19 @@ public class PlayField {
 	
 	/** Spawns available notes from the NoteQueue */
 	private void spawnNotes() {
+		if(stopTime != -1) return;	// Return if we have already reached the end of the queue
 		int track;
 		float speed;
 		while(runningTime > nq.curTime()) {
 			track = nq.curTrack();
 			speed = noteDelta/timeDelta;
 			notes.add(new Note(spawnX[track],spawnY,track,speed,runningTime));
-			nq.next();
+			
+			// If we have reached the end of the queue, set stoptime and exit while loop
+			if (!nq.next()) {
+				stopTime = runningTime + timeDelta;
+				break;
+			}
 		}
 	}
 	

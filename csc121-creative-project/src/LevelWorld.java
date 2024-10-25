@@ -14,9 +14,12 @@ public class LevelWorld implements IWorld{
 	public LevelWorld() {
 		
 		km = new KeyManager();
-		pf = new PlayField(NoteQueue.loadFile(), km);
+		Song s = Song.loadFile("test.txt");
+		if (s == null) {
+			System.out.println("Can't load file");
+		}
+		pf = new PlayField(s, km);
 		pf.start();
-		speed = 1;
 	}
 	
 	public int hashCode() {
