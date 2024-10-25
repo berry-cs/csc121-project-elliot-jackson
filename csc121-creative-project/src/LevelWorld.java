@@ -14,7 +14,7 @@ public class LevelWorld implements IWorld{
 	public LevelWorld() {
 		
 		km = new KeyManager();
-		Song s = Song.loadFile("test.txt");
+		Song s = Song.loadFile("data/levels/test.txt");
 		if (s == null) {
 			System.out.println("Can't load file");
 		}
