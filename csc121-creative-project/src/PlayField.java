@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 
-import processing.core.PApplet;
-
 public class PlayField {
 	
 	// Objects used by PlayField
@@ -14,14 +12,14 @@ public class PlayField {
 	NoteQueue nq;
 	
 	// Static information
-	final static int XPOS	= 10;
-	final static int YPOS	= 10;
-	final static int WIDTH  = 300;
-	final static int HEIGHT = 555;
+	final static int XPOS	= 110;
+	final static int YPOS	= 35;
+	final static int WIDTH  = 265;
+	final static int HEIGHT = 530;
 	
 	// Note spawn information
 	int spawnY; // Y-coordinate of note spawn locations
-	float spawnX[] = {0,0,0,0}; // X-coordinates fo note spawn locations
+	float spawnX[] = {0,0,0,0}; // X-coordinates for note spawn locations
 	
 	// Status Variables
 	boolean running = false;	// Blocks the execution of update()
@@ -48,7 +46,7 @@ public class PlayField {
 		
 		/** Generate Spawn x coords */
 		for(int i = 0; i < 4; i++) {
-			spawnX[i] = (WIDTH / 5)* i + loc.x() + WIDTH/10;
+			spawnX[i] = (WIDTH / 5) * 1.05f * (i+1) + loc.x();
 		}
 	}
 	
@@ -78,16 +76,13 @@ public class PlayField {
 		cullNotes();
 	}
 	
-	
-	public void render(PApplet p) {
-		loc.draw(p);
-		strumBar.draw(p);
-		missed.draw(p);
-		for(Note n : notes) {
-			n.draw(p);
-		}
+	public ArrayList<Note> getNoteArray() {
+		return this.notes;
 	}
 	
+	public HitBox getHitBox() {
+		return loc;
+	}
 
 	/* PRIVATE HELPER METHODS */
 	

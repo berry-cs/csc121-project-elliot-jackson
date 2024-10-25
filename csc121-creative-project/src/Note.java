@@ -1,5 +1,3 @@
-import processing.core.PApplet;
-
 public class Note {
 	private HitBox loc;
 	private float speed;
@@ -10,7 +8,7 @@ public class Note {
 	public boolean shouldCull;
 	public boolean missed;
 	
-	final static int SIZE = 20;
+	public final static int SIZE = 20;
 	
 	public Note(float centerX, float centerY, int track, float speed, long curTime) {
 		loc = new HitBox(centerX-(SIZE/2),centerY-(SIZE/2),SIZE,SIZE);
@@ -44,14 +42,16 @@ public class Note {
 		}
 	}
 	
-	public void draw(PApplet p) {
-		p.fill(255,255,0);
-		if (missed) p.fill(255,0,0);
-		p.rect(loc.x(), loc.y(), SIZE, SIZE);
-	}
-	
 	public int track() {
 		return track;
+	}
+	
+	public float x() {
+		return loc.x();
+	}
+	
+	public float y() {
+		return loc.y();
 	}
 	
 }

@@ -4,8 +4,6 @@
  * the top left corner
  */
 
-import processing.core.PApplet;
-
 public class HitBox {
 	private float locX, locY, sizeX, sizeY;
 	
@@ -70,10 +68,4 @@ public class HitBox {
 	public boolean containedBy(HitBox hb) {
 		return hb.isInside(locX, locY) && hb.isInside(locX + sizeX, locY + sizeY);
 	}
-	
-	public void draw(PApplet p) {
-		p.noFill();
-		p.rect(locX, locY, sizeX, sizeY);
-	}
-	
 }
