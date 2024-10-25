@@ -5,15 +5,18 @@ public class Note {
 	private float speed;
 	private int track;
 	
+	long curTime;
+	
 	public boolean shouldCull;
 	public boolean missed;
 	
 	final static int SIZE = 20;
 	
-	public Note(float centerX, float centerY, int track) {
+	public Note(float centerX, float centerY, int track, float speed, long curTime) {
 		loc = new HitBox(centerX-(SIZE/2),centerY-(SIZE/2),SIZE,SIZE);
-		speed = 1;
+		this.speed = speed;
 		this.track = track;
+		this.curTime = curTime;
 		shouldCull = false;
 		missed = false;
 	}
@@ -30,8 +33,11 @@ public class Note {
 		return loc.touching(hb);
 	}
 	
-	public void update() {
-		loc.addY(-speed);
+	public void update(long curTime) {
+		long delta = curTime - this.curTime;
+		this.curTime = curTime;
+		
+		loc.addY(-speed*delta);
 		
 		if(loc.y() < -SIZE) {
 			shouldCull = true;
