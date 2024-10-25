@@ -3,19 +3,36 @@ import java.util.ArrayList;
 import processing.core.PApplet;
 
 public class PlayField {
+	
+	// Objects used by PlayField
 	HitBox loc;
 	HitBox strumBar;
 	HitBox missed;
 	ArrayList<Note> notes;
-	HitBox spawners[] = {null, null, null, null};
 	KeyManager km;
+	NoteQueue nq;
 	
+	// Static information
 	final static int XPOS	= 10;
 	final static int YPOS	= 10;
 	final static int WIDTH  = 300;
 	final static int HEIGHT = 555;
 	
-	public PlayField(KeyManager km) {
+	// Note spawn information
+	int spawnY; // Y-coordinate of note spawn locations
+	float spawnX[] = {0,0,0,0}; // X-coordinates fo note spawn locations
+	
+	// Status Variables
+	boolean running = false;	// Blocks the execution of update()
+	long startTime;				// Initialized during start()
+	long runningTime;			// Initialized at the start of update()
+	
+	// Note Speed information
+	float timeDelta = 5000;		// The time in ms it takes for a note to reach strumBar from spawn
+	float noteDelta;			// The distance from spawn to strumBar (initialized in constructor)
+	
+	public PlayField(NoteQueue nq, KeyManager km) {
+		this.nq = nq;
 		this.km = km;
 		
 		loc 		= new HitBox(XPOS, YPOS, 	WIDTH, HEIGHT);
@@ -23,22 +40,36 @@ public class PlayField {
 		missed 		= new HitBox(XPOS, YPOS+5, 	WIDTH, 10);
 		notes 		= new ArrayList<Note>();
 		
-		/** Generate Spawners */
+		spawnY = YPOS+HEIGHT-55;
+		noteDelta = spawnY-strumBar.centerY();
+		
+		/** Generate Spawn x coords */
 		for(int i = 0; i < 4; i++) {
-			float x = (WIDTH / 5)* i + loc.x() + WIDTH/10;
-			spawners[i] = new HitBox(x, YPOS+HEIGHT-55, 50, 50);
+			spawnX[i] = (WIDTH / 5)* i + loc.x() + WIDTH/10;
 		}
 	}
 	
 	/* PUBLIC METHODS */
 	
+	/* Sets 'running' bool to true and initializes startTime */
+	public void start() {
+		running = true;
+		startTime = System.currentTimeMillis();
+	}
+	
 	public void update() {
+		if (!running) return;
+		
+		runningTime = System.currentTimeMillis()-startTime;
+		
 		if(km.isSpacePressed()) strum();
 		
 		for(Note n : notes) {
-			n.update();
+			n.update(runningTime);
 			if (n.touching(missed) && !n.missed) n.missed = true;
 		}
+		
+		spawnNotes();
 		cullNotes();
 	}
 	
@@ -47,18 +78,13 @@ public class PlayField {
 		strumBar.draw(p);
 		missed.draw(p);
 		for(int i = 0; i < 4; i++) {
-			spawners[i].draw(p);
+			//spawners[i].draw(p);
 		}
 		for(Note n : notes) {
 			n.draw(p);
 		}
 	}
-	
-	public void randomNote() {
-		int s = (int)(Math.random() * (3 + 1));
-		notes.add(new Note(spawners[s].centerX(), spawners[s].centerY(), s));
-	}
-	
+
 	/* PRIVATE HELPER METHODS */
 	
 	private void strum() {
@@ -68,6 +94,18 @@ public class PlayField {
 			if (n.containedBy(strumBar)) {
 				n.cull();
 			}
+		}
+	}
+	
+	/** Spawns available notes from the NoteQueue */
+	private void spawnNotes() {
+		int track;
+		float speed;
+		while(runningTime > nq.curTime()) {
+			track = nq.curTrack();
+			speed = noteDelta/timeDelta;
+			notes.add(new Note(spawnX[track],spawnY,track,speed,runningTime));
+			nq.next();
 		}
 	}
 	
