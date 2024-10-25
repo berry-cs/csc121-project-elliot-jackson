@@ -1,3 +1,5 @@
+package playfield;
+
 public class KeyManager {
 	private String noteKeys = "asdf";
 	private boolean[] notePress = {false,false,false,false};

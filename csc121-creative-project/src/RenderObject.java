@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import processing.core.PApplet;
 import processing.core.PImage;
+import playfield.*;
 
 
 public interface RenderObject {

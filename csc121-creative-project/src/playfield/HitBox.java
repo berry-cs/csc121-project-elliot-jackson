@@ -1,3 +1,4 @@
+package playfield;
 
 /* Represents a rectangular hit box
  * The "position" of the box represents the coordinates of

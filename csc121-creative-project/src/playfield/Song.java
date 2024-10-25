@@ -1,3 +1,4 @@
+package playfield;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -14,7 +15,7 @@ public class Song {
 		this.duration = duration;
 	}
 	
-	static Song loadFile(String filename) {
+	public static Song loadFile(String filename) {
 		ArrayList<String> fileData = new ArrayList<String>();
 
 		try {

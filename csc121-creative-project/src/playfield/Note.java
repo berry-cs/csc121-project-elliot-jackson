@@ -1,3 +1,5 @@
+package playfield;
+
 public class Note {
 	private HitBox loc;
 	private float speed;
