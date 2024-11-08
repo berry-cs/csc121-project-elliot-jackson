@@ -23,13 +23,18 @@ public class PlayField {
 	float spawnX[] = {0,0,0,0}; // X-coordinates for note spawn locations
 	
 	// Status Variables
-	boolean running = false;	// Blocks the execution of update()
+	boolean running = false;	// Blocks the execution of update(). Set to True when level is over
 	long startTime;				// Initialized during start()
 	long runningTime;			// Initialized at the start of update()
 	long stopTime = -1;			// The time in ms the PlayField should stop updating. Is set when NoteQueue's end is reached  
 	
+	// Pause Variables
+	boolean paused;				// Temporarily pauses update()
+	long pauseStartTime;		// Time of pause
+	long pauseOffsetTime = 0;	// Total time paused- used to offset note movement
+	
 	// Note Speed information
-	long timeDelta = 5000;		// The time in ms it takes for a note to reach strumBar from spawn
+	long timeDelta = 8000;		// The time in ms it takes for a note to reach strumBar from spawn
 	float noteDelta;			// The distance from spawn to strumBar (initialized in constructor)
 	
 	public PlayField(Song s, KeyManager km) {
@@ -62,7 +67,9 @@ public class PlayField {
 	
 	public void update() {
 		if (!running) return;
-		runningTime = System.currentTimeMillis()-startTime;
+		if (paused) return;
+		
+		runningTime = System.currentTimeMillis()-startTime-pauseOffsetTime;
 		
 		if (runningTime > stopTime && stopTime != -1) running = false;
 		
@@ -80,9 +87,17 @@ public class PlayField {
 	public ArrayList<Note> getNoteArray() {
 		return this.notes;
 	}
+
+	public void pause() {
+		if (paused) return;
+		paused = true;
+		pauseStartTime = System.currentTimeMillis();
+	}
 	
-	public HitBox getHitBox() {
-		return loc;
+	public void unpause() {
+		if (!paused) return;
+		paused = false;
+		pauseOffsetTime += System.currentTimeMillis() - pauseStartTime;
 	}
 
 	/* PRIVATE HELPER METHODS */

@@ -53,6 +53,7 @@ public class LevelWorld implements IWorld{
 	}
 	
 	public IWorld update(){
+		pf.unpause();
 		pf.update(); 
 		return this;
 	}
@@ -63,6 +64,7 @@ public class LevelWorld implements IWorld{
 	
 	public IWorld keyPressed(KeyEvent kev) {
 		if (kev.getKey() == 'p') {
+			pf.pause();
 			return new PauseWorld(this);
 		}
 		km.press(kev.getKey());
