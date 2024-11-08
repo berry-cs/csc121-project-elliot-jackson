@@ -17,12 +17,12 @@ public class StartWorld implements IWorld {
 
 
 	public IWorld mousePressed(MouseEvent mev) {
-		return new LevelWorld(p);
+		return new LevelSelectWorld(p);
 	}
 
 	public IWorld keyPressed(KeyEvent kev) {
 		if (kev.getKeyCode() == PApplet.ENTER) {
-			return new LevelWorld(p);
+			return new LevelSelectWorld(p);
 		}
 		else {
 			return this;

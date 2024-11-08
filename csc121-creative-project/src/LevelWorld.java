@@ -12,11 +12,15 @@ public class LevelWorld implements IWorld{
 	double speed;
 	RenderObject gameRender;
 	
-	public LevelWorld(PApplet p) {
+	public LevelWorld(PApplet p, String filename) {
 		
-		Song s = Song.loadFile("data/levels/test.txt");
+		Song s = Song.loadFile(filename);
 		if (s == null) {
 			System.out.println("Can't load file");
+		}
+		
+		for(Song.Info i : Song.getSongList("data/levels")) {
+			System.out.println(i.title());
 		}
 		
 		km = new KeyManager();
