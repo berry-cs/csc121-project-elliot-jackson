@@ -1,3 +1,4 @@
+import playfield.Note;
 import processing.core.PApplet;
 import processing.event.MouseEvent;
 
