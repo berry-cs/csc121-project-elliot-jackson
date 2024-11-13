@@ -37,6 +37,12 @@ public class PlayField {
 	long timeDelta = 8000;		// The time in ms it takes for a note to reach strumBar from spawn
 	float noteDelta;			// The distance from spawn to strumBar (initialized in constructor)
 	
+	
+	// Score information
+	static int score = 0;
+	ArrayList<Boolean> streak = new ArrayList<Boolean>();
+	static int MaxScore;
+	
 	public PlayField(Song s, KeyManager km) {
 		this.song = s;
 		this.nq = s.nq;
