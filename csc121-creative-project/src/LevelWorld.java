@@ -11,6 +11,7 @@ public class LevelWorld implements IWorld{
 	KeyManager km;
 	double speed;
 	RenderObject gameRender;
+	int score = PlayField.score;
 	
 	public LevelWorld(PApplet p, String filename) {
 		
@@ -31,7 +32,6 @@ public class LevelWorld implements IWorld{
 		renderList.createAdd(pf.getNoteArray());
 		renderList.createAdd("data/images/playfield_top.png", p.width, p.height);
 		gameRender = renderList;
-		
 		pf.start();
 	}
 	
@@ -53,6 +53,9 @@ public class LevelWorld implements IWorld{
 	public PApplet draw(PApplet p) {
 		p.background(200);
 		gameRender.render();
+		p.fill(255, 255, 255);
+		p.textSize(32);
+		p.text("" + score, 550, 250);
 		return p;
 	}
 	

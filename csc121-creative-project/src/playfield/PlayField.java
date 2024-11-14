@@ -39,7 +39,7 @@ public class PlayField {
 	
 	
 	// Score information
-	static int score = 0;
+	public static int score = 0;
 	ArrayList<Boolean> streak = new ArrayList<Boolean>();
 	static int MaxScore;
 	
@@ -114,6 +114,7 @@ public class PlayField {
 			if (!km.isNotePressed(track)) continue;
 			if (n.loc().containedBy(strumBar)) {
 				n.cull();
+				score = score + 5;
 			}
 		}
 	}
