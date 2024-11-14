@@ -44,7 +44,7 @@ public class PlayField {
 		
 		loc 		= new HitBox(XPOS, YPOS, 	WIDTH, HEIGHT);
 		strumBar 	= new HitBox(XPOS, YPOS+15, WIDTH, 30);
-		missed 		= new HitBox(XPOS, YPOS+5, 	WIDTH, 10);
+		missed 		= new HitBox(XPOS, YPOS, 	WIDTH, 15);
 		notes 		= new ArrayList<Note>();
 		
 		spawnY = YPOS+HEIGHT-55;
