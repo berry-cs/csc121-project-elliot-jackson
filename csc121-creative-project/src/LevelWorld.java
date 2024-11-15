@@ -1,5 +1,4 @@
 import java.util.Objects;
-
 import processing.core.PApplet;
 import processing.event.KeyEvent;
 import processing.event.MouseEvent;
@@ -13,7 +12,14 @@ public class LevelWorld implements IWorld{
 	RenderObject gameRender;
 	int score = PlayField.score;
 	
+	//Variables
+	public final static int scoreX = 550;
+	public final static int scoreY = 250;
+	public final static int scoreSize = 32;
+	int white;
+	
 	public LevelWorld(PApplet p, String filename) {
+		white = p.color(255);
 		
 		Song s = Song.loadFile(filename);
 		if (s == null) {
@@ -53,9 +59,10 @@ public class LevelWorld implements IWorld{
 	public PApplet draw(PApplet p) {
 		p.background(200);
 		gameRender.render();
-		p.fill(255, 255, 255);
-		p.textSize(32);
-		p.text("" + score, 550, 250);
+		p.fill(white);
+		p.textSize(scoreSize);
+		p.text("" + score, scoreX, scoreY);
+	//	System.out.println(score);
 		return p;
 	}
 	
