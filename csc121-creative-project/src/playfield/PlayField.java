@@ -23,7 +23,7 @@ public class PlayField {
 	float spawnX[] = {0,0,0,0}; // X-coordinates for note spawn locations
 	
 	// Status Variables
-	boolean running = false;	// Blocks the execution of update(). Set to True when level is over
+	public boolean running = false;	// Blocks the execution of update(). Set to True when level is over
 	long startTime;				// Initialized during start()
 	long runningTime;			// Initialized at the start of update()
 	long stopTime = -1;			// The time in ms the PlayField should stop updating. Is set when NoteQueue's end is reached  
@@ -63,6 +63,10 @@ public class PlayField {
 	}
 	
 	/* PUBLIC METHODS */
+	
+	public boolean isRunning() {
+		return this.running;
+	}
 	
 	/* Sets 'running' bool to true and initializes startTime */
 	public void start() {

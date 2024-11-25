@@ -10,17 +10,15 @@ public class LevelSelectWorld implements IWorld{
 	
 	ArrayList<Song.Info> songList;
 	int index;
-	PApplet p;
 	
-	public static int Ypos = 200;
-	public final static int Xpos = 300;
+	
 	int background;
 	int text;
 	
-	public LevelSelectWorld(PApplet p) {
+	public LevelSelectWorld() {
+		PApplet p = new PApplet();
 		background = p.color(200);
 		text = p.color(0);
-		this.p = p;
 		
 		songList = Song.getSongList("data/levels");
 		
@@ -30,6 +28,9 @@ public class LevelSelectWorld implements IWorld{
 	public PApplet draw(PApplet p) {
 		p.background(background);
 		p.fill(text);
+		
+		int Ypos = 200;
+		int Xpos = 300;
 		for(Song.Info i : Song.getSongList("data/levels")) {
 			p.text(i.title(), Xpos, Ypos);
 			Ypos += 30;
@@ -56,7 +57,7 @@ public class LevelSelectWorld implements IWorld{
 			index = Math.min(index+1, songList.size()-1);
 			break;
 		case ' ':
-			return new LevelWorld(this.p, songList.get(index).filename());
+			return new LevelWorld(songList.get(index).filename());
 		}
 		return this;
 	}

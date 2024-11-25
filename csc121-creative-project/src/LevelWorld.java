@@ -18,7 +18,8 @@ public class LevelWorld implements IWorld{
 	public final static int scoreSize = 32;
 	int white;
 	
-	public LevelWorld(PApplet p, String filename) {
+	public LevelWorld( String filename) {
+		PApplet p = new PApplet();
 		white = p.color(255);
 		
 		Song s = Song.loadFile(filename);
@@ -66,9 +67,12 @@ public class LevelWorld implements IWorld{
 		return p;
 	}
 	
-	public IWorld update(){
+	public IWorld update(PApplet p){
 		pf.unpause();
 		pf.update(); 
+		if(!pf.isRunning()) {
+			return new ScoreWorld();
+		}
 		return this;
 	}
 	

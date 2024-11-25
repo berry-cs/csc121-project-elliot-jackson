@@ -3,7 +3,7 @@ import processing.event.KeyEvent;
 import processing.event.MouseEvent;
 
 public class StartWorld implements IWorld {
-	PApplet p;
+	
 	public final static int size = 32;
 	public final static int Xpos = 275;
 	public final static int Ypos = 250;
@@ -14,7 +14,6 @@ public class StartWorld implements IWorld {
 	public PApplet draw(PApplet p) { 
 		background = p.color(200);
 		text = p.color(0, 255, 255);
-		this.p = p;
 		p.background(background);
 		p.fill(0, 255, 255);
 		p.textSize(size);
@@ -24,12 +23,12 @@ public class StartWorld implements IWorld {
 
 
 	public IWorld mousePressed(MouseEvent mev) {
-		return new LevelSelectWorld(p);
+		return new LevelSelectWorld();
 	}
 
 	public IWorld keyPressed(KeyEvent kev) {
 		if (kev.getKeyCode() == PApplet.ENTER) {
-			return new LevelSelectWorld(p);
+			return new LevelSelectWorld();
 		}
 		else {
 			return this;
