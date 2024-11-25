@@ -1,9 +1,11 @@
 package playfield;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /** 
  * Represents a 'song'- Including the list
@@ -24,6 +26,28 @@ public class Song {
 	
 	/** Loads a song file and returns a built song object */
 	public static Song loadFile(String filename) {
+		try {
+			NoteQueue nq = new NoteQueue();
+			Scanner sc = new Scanner(new File(filename));
+			String title = sc.nextLine();
+			String audioFile = sc.nextLine();
+			int duration = 0;
+			while (sc.hasNextInt()) {
+				int track = sc.nextInt();
+				int time = sc.nextInt();
+				duration = time;
+				nq.add(track, time);
+				//System.out.println("reading " + track + " " + time);
+			}
+			
+			return new Song(title, nq, duration);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return null;
+		/*
 		ArrayList<String> fileData = new ArrayList<String>();
 
 		try {
@@ -53,6 +77,7 @@ public class Song {
 			nq.add(track, time);
 		}
 		return new Song(title, nq, time);
+		*/
 	}
 	
 	public static ArrayList<Info> getSongList(String directory) {

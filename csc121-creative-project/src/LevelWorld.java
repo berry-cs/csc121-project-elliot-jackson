@@ -34,10 +34,10 @@ public class LevelWorld implements IWorld{
 		km = new KeyManager();
 		pf = new PlayField(s, km);
 		
-		RenderList renderList = new RenderList(p);
-		renderList.createAdd("data/images/playfield_bottom.png", p.width, p.height);
+		RenderList renderList = new RenderList();
+		renderList.createAdd("data/images/playfield_bottom.png", AppTemplate.APP_WIDTH, AppTemplate.APP_HEIGHT);
 		renderList.createAdd(pf.getNoteArray());
-		renderList.createAdd("data/images/playfield_top.png", p.width, p.height);
+		renderList.createAdd("data/images/playfield_top.png", AppTemplate.APP_WIDTH, AppTemplate.APP_HEIGHT);
 		gameRender = renderList;
 		pf.start();
 	}
@@ -59,7 +59,7 @@ public class LevelWorld implements IWorld{
 	
 	public PApplet draw(PApplet p) {
 		p.background(200);
-		gameRender.render();
+		gameRender.render(p);
 		p.fill(white);
 		p.textSize(scoreSize);
 		p.text("" + score, scoreX, scoreY);
@@ -67,7 +67,7 @@ public class LevelWorld implements IWorld{
 		return p;
 	}
 	
-	public IWorld update(PApplet p){
+	public IWorld update(){
 		pf.unpause();
 		pf.update(); 
 		if(!pf.isRunning()) {

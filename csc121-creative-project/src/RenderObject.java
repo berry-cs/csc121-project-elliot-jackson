@@ -5,36 +5,34 @@ import playfield.*;
 
 
 public interface RenderObject {
-	public void render();
+	public void render(PApplet p);
 }
 
 class RenderList implements RenderObject {
 	ArrayList<RenderObject> list;
-	PApplet p;
-	
-	RenderList(PApplet p) {
-		this.p = p;
+
+	RenderList() {
 		list = new ArrayList<RenderObject>();
 	}
-	
+
 	// Adding an existing RenderObject
 	void add(RenderObject ro) {
 		list.add(ro);
 	}
-	
+
 	// Create and add an image from filename
 	void createAdd(String filename, int width, int height) {
-		this.add(new image(p, filename, width, height));
+		this.add(new image(filename, width, height));
 	}
-	
+
 	// Create and add a notesRenderer from ArrayList of Note objects
 	void createAdd(ArrayList<Note> notes) {
-		this.add(new notesRenderer(p, notes));
+		this.add(new notesRenderer(notes));
 	}
-	
-	public void render() {
+
+	public void render(PApplet p) {
 		for(RenderObject ro : list) {
-			ro.render();
+			ro.render(p);
 		}
 	}
 }
@@ -43,13 +41,13 @@ class RenderList implements RenderObject {
 class hitBoxRenderer implements RenderObject {
 	PApplet p;
 	HitBox hb;
-	
+
 	hitBoxRenderer(PApplet p, HitBox hb) {
 		this.p = p;
 		this.hb = hb;
 	}
-	
-	public void render() {
+
+	public void render(PApplet p) {
 		p.noFill();
 		p.rect(hb.x(), hb.y(), hb.width(), hb.height());
 	}
@@ -57,43 +55,55 @@ class hitBoxRenderer implements RenderObject {
 
 
 class notesRenderer implements RenderObject {
-	PApplet p;
 	ArrayList<Note> notes;
 	image ro[] = {null,null,null,null};
-	
-	notesRenderer(PApplet p, ArrayList<Note> notes) {
-		this.p = p;
+
+	notesRenderer(ArrayList<Note> notes) {
 		this.notes = notes;
-		
+
 		// Load note images from data
 		for(int i=0; i<4; i++) {
-			ro[i] = new image(p,"data/images/"+Integer.toString(i)+"-note.png", Note.SIZE, Note.SIZE);
+			ro[i] = new image("data/images/"+Integer.toString(i)+"-note.png", Note.SIZE, Note.SIZE);
 		}
 	}
-	
-	public void render() {
+
+	public void render(PApplet p) {
+		//System.out.println(notes);
 		for(Note n : notes) {
-			ro[n.track()].render(n.x(), n.y());
+			ro[n.track()].render(p, n.x(), n.y());
 		}
 	}
 }
 
 
 class image implements RenderObject {
-	PApplet p;
 	PImage img;
+	String filename;
+	int width;
+	int height;
+
+	image( String filename, int width, int height) {
+		this.filename = filename;
+		this.img = null;
+		this.width = width;
+		this.height = height;
+	}
 	
-	image(PApplet p, String filename, int width, int height) {
-		this.p = p;
-		img = p.loadImage(filename);
-		img.resize(width, height);
+	private void loadImage(PApplet p) {
+		if (img == null) { 
+			img = p.loadImage(filename); 
+			img.resize(width, height); 
+		}
 	}
 
-	public void render() {
+	public void render(PApplet p) {
+		loadImage(p);
 		p.image(img, 0, 0);
 	}
-	
-	public void render(float x, float y) {
+
+	public void render(PApplet p, float x, float y) {
+		loadImage(p);
 		p.image(img, x, y);
 	}
+
 }

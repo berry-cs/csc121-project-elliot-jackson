@@ -128,6 +128,7 @@ public class PlayField {
 		if(stopTime != -1) return;	// Return if we have already reached the end of the queue
 		int track;
 		float speed;
+		//System.out.println(runningTime + " === " + nq.curTime());
 		while(runningTime > nq.curTime()) {
 			track = nq.curTrack();
 			speed = noteDelta/timeDelta;

@@ -7,8 +7,11 @@ import processing.event.*;
 public class AppTemplate extends PApplet {	// <----- 1. rename AppTemplate everywhere in this file
     IWorld w;
     
+    public final static int APP_WIDTH = 800;
+    public final static int APP_HEIGHT = 600;
+    
     public void settings() {
-        this.size(800, 600);
+        this.size(AppTemplate.APP_WIDTH, AppTemplate.APP_HEIGHT);
     }
     
     public void setup() {
