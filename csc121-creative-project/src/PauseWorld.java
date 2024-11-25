@@ -22,7 +22,7 @@ public class PauseWorld implements IWorld {
 		text = p.color(255, 0, 255);
 		
 		p.background(background);
-		p.fill(255, 0, 255);
+		p.fill(text);
 		p.textSize(size);
 		p.text("Paused", Xpos, Ypos);
 		return p;
