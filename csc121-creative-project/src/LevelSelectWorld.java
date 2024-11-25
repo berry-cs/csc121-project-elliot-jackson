@@ -12,7 +12,14 @@ public class LevelSelectWorld implements IWorld{
 	int index;
 	PApplet p;
 	
+	public static int Ypos = 200;
+	public final static int Xpos = 300;
+	int background;
+	int text;
+	
 	public LevelSelectWorld(PApplet p) {
+		background = p.color(200);
+		text = p.color(0);
 		this.p = p;
 		
 		songList = Song.getSongList("data/levels");
@@ -21,12 +28,11 @@ public class LevelSelectWorld implements IWorld{
 	}
 	
 	public PApplet draw(PApplet p) {
-		p.background(200);
-		p.fill(0);
-		int pos = 200;
+		p.background(background);
+		p.fill(text);
 		for(Song.Info i : Song.getSongList("data/levels")) {
-			p.text(i.title(), 300, pos);
-			pos += 30;
+			p.text(i.title(), Xpos, Ypos);
+			Ypos += 30;
 		}
 		p.text(">", 280, 200+index*30);
 		
