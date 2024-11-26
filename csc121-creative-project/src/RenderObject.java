@@ -40,11 +40,11 @@ class RenderList implements RenderObject {
 }
 
 
-class hitBoxRenderer implements RenderObject {
+class HitBoxRenderer implements RenderObject {
 	PApplet p;
 	HitBox hb;
 	
-	hitBoxRenderer(PApplet p, HitBox hb) {
+	HitBoxRenderer(PApplet p, HitBox hb) {
 		this.p = p;
 		this.hb = hb;
 	}
