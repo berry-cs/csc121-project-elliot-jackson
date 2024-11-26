@@ -5,6 +5,7 @@ import processing.event.MouseEvent;
 import playfield.*;
 
 public class LevelWorld implements IWorld{
+	PApplet p;
 	
 	PlayField pf;
 	KeyManager km;
@@ -19,6 +20,7 @@ public class LevelWorld implements IWorld{
 	int white;
 	
 	public LevelWorld(PApplet p, String filename) {
+		this.p = p;
 		white = p.color(255);
 		
 		Song s = Song.loadFile(filename);
@@ -73,6 +75,9 @@ public class LevelWorld implements IWorld{
 	public IWorld update(){
 		pf.unpause();
 		pf.update(); 
+		if(!pf.isRunning()) {
+			return new ScoreWorld(p, pf);
+		}
 		return this;
 	}
 	
