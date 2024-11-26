@@ -13,7 +13,7 @@ public class Note {
 	public boolean shouldCull;
 	public boolean missed;
 	
-	public final static int SIZE = 25;
+	public final static int SIZE = 20;
 	
 	public Note(float centerX, float centerY, int track, float speed, long curTime) {
 		loc = new HitBox(centerX-(SIZE/2),centerY-(SIZE/2),SIZE,SIZE);
