@@ -6,8 +6,10 @@ public class ScoreWorld implements IWorld {
 	public final static int Xpos = 350;
 	public final static int Ypos = 250;
 	
-	public ScoreWorld() {
-		
+	PApplet p;
+	
+	public ScoreWorld(PApplet p) {
+		this.p = p;
 	}
 	
 	public PApplet draw(PApplet p) { 
@@ -21,6 +23,6 @@ public class ScoreWorld implements IWorld {
 	}
 	
 	public IWorld mousePressed(MouseEvent mev) {
-		return new LevelSelectWorld();
+		return new LevelSelectWorld(p);
 	}
 }
