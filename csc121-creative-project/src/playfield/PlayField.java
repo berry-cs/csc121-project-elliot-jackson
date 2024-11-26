@@ -40,6 +40,8 @@ public class PlayField {
 	
 	// Score information
 	int score = 0;
+	int hitCount = 0;
+	int missedCount = 0;
 	int streak = 0;
 	//ArrayList<Boolean> streak = new ArrayList<Boolean>();
 	//static int MaxScore;
@@ -95,6 +97,7 @@ public class PlayField {
 		for(Note n : notes) {
 			n.update(runningTime);
 			if (n.loc().touching(missed) && !n.missed) {
+				missedCount += 1;
 				streak = 0;
 			}
 			if (n.loc().touching(cullBox)) {
@@ -140,6 +143,11 @@ public class PlayField {
 	public HitBox getMissed() {
 		return missed;
 	}
+	
+	public int averageHit() {
+		if(missedCount == 0) return 100;
+		return hitCount*100/(missedCount+hitCount);
+	}
 
 	/* PRIVATE HELPER METHODS */
 	
@@ -150,6 +158,7 @@ public class PlayField {
 			if (n.loc().containedBy(strumBar)) {
 				n.cull();
 				score = score + 5;
+				hitCount += 1;
 				streak += 1;
 			}
 		}
