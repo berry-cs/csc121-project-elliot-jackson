@@ -10,11 +10,11 @@ public class LevelWorld implements IWorld{
 	KeyManager km;
 	double speed;
 	RenderObject gameRender;
-	int score = PlayField.score;
+	//int score = PlayField.score;
 	
 	//Variables
-	public final static int scoreX = 550;
-	public final static int scoreY = 250;
+	public final static int scoreX = 500;
+	public final static int scoreY = 200;
 	public final static int scoreSize = 32;
 	int white;
 	
@@ -37,6 +37,8 @@ public class LevelWorld implements IWorld{
 		renderList.createAdd("data/images/playfield_bottom.png", p.width, p.height);
 		renderList.createAdd(pf.getNoteArray());
 		renderList.createAdd("data/images/playfield_top.png", p.width, p.height);
+		renderList.add(new HitBoxRenderer(p, pf.getStrumBar()));
+		renderList.add(new HitBoxRenderer(p, pf.getMissed()));
 		gameRender = renderList;
 		pf.start();
 	}
@@ -61,8 +63,10 @@ public class LevelWorld implements IWorld{
 		gameRender.render();
 		p.fill(white);
 		p.textSize(scoreSize);
-		p.text("" + score, scoreX, scoreY);
+		p.text("Score: " + pf.getScore(), scoreX, scoreY);
+		p.text("Streak: " + pf.getStreak(), scoreX, scoreY+40);
 	//	System.out.println(score);
+		System.out.println("X: " + p.mouseX + " | Y: "+ p.mouseY);
 		return p;
 	}
 	
