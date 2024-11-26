@@ -7,6 +7,7 @@ public class PlayField {
 	HitBox loc;
 	HitBox strumBar;
 	HitBox missed;
+	HitBox cullBox;
 	ArrayList<Note> notes;
 	Song song;
 	KeyManager km;
@@ -37,11 +38,12 @@ public class PlayField {
 	long timeDelta = 8000;		// The time in ms it takes for a note to reach strumBar from spawn
 	float noteDelta;			// The distance from spawn to strumBar (initialized in constructor)
 	
-	
 	// Score information
-	public static int score = 0;
-	ArrayList<Boolean> streak = new ArrayList<Boolean>();
-	static int MaxScore;
+	int score = 0;
+	int streak = 0;
+	//ArrayList<Boolean> streak = new ArrayList<Boolean>();
+	//static int MaxScore;
+	
 	
 	public PlayField(Song s, KeyManager km) {
 		this.song = s;
@@ -49,8 +51,9 @@ public class PlayField {
 		this.km = km;
 		
 		loc 		= new HitBox(XPOS, YPOS, 	WIDTH, HEIGHT);
-		strumBar 	= new HitBox(XPOS, YPOS+15, WIDTH, 30);
-		missed 		= new HitBox(XPOS, YPOS, 	WIDTH, 15);
+		strumBar 	= new HitBox(XPOS, YPOS+90, WIDTH, 30);
+		missed 		= new HitBox(XPOS, YPOS+70, WIDTH, 15);
+		cullBox		= new HitBox(XPOS, YPOS,	WIDTH, 30);
 		notes 		= new ArrayList<Note>();
 		
 		spawnY = YPOS+HEIGHT-55;
@@ -75,15 +78,24 @@ public class PlayField {
 		if (!running) return;
 		if (paused) return;
 		
+		//Calculate running time based on current time, time started, and the 'time paused' offset
 		runningTime = System.currentTimeMillis()-startTime-pauseOffsetTime;
 		
+		// Once last note finishes, set running to false
 		if (runningTime > stopTime && stopTime != -1) running = false;
 		
+		// Run strum routine
 		if(km.isSpacePressed()) strum();
 		
+		// Update every note. If note hits 'missed' hitbox, set streak to zero
 		for(Note n : notes) {
 			n.update(runningTime);
-			if (n.loc().touching(missed) && !n.missed) n.cull();
+			if (n.loc().touching(missed) && !n.missed) {
+				streak = 0;
+			}
+			if (n.loc().touching(cullBox)) {
+				n.cull();
+			}
 		}
 		
 		spawnNotes();
@@ -93,17 +105,36 @@ public class PlayField {
 	public ArrayList<Note> getNoteArray() {
 		return this.notes;
 	}
-
+	
+	/** Pauses the game while keeping track of time elapsed while paused */
 	public void pause() {
 		if (paused) return;
 		paused = true;
 		pauseStartTime = System.currentTimeMillis();
 	}
 	
+	/** Unpauses the game and adds the time paused to a time offset */
 	public void unpause() {
 		if (!paused) return;
 		paused = false;
 		pauseOffsetTime += System.currentTimeMillis() - pauseStartTime;
+	}
+	
+	/** Getter functions */
+	
+	public int getScore() {
+		return score;
+	}
+	
+	public int getStreak() {
+		return streak;
+	}
+	
+	public HitBox getStrumBar() {
+		return strumBar;
+	}
+	public HitBox getMissed() {
+		return missed;
 	}
 
 	/* PRIVATE HELPER METHODS */
@@ -115,6 +146,7 @@ public class PlayField {
 			if (n.loc().containedBy(strumBar)) {
 				n.cull();
 				score = score + 5;
+				streak += 1;
 			}
 		}
 	}
