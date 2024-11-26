@@ -4,12 +4,22 @@ import processing.event.MouseEvent;
 
 public class StartWorld implements IWorld {
 	PApplet p;
+	RenderObject gameRender;
+	
+	
+	
+	public StartWorld(PApplet p) {
+		this.p = p;
+		RenderList rl = new RenderList(p);
+		rl.createAdd("data/images/chalkboard.jpg", p.width, p.height);
+		gameRender = rl;
+	}
 
 	/** produce a visual rendering of this world on the given window */
 	public PApplet draw(PApplet p) { 
 		this.p = p;
-		p.background(200);
-		p.fill(0, 255, 255);
+		gameRender.render();
+		p.fill(255, 255, 255);
 		p.textSize(32);
 		p.text("Press Enter to Start", 275, 250);
 		return p;
