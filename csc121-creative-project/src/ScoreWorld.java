@@ -24,16 +24,10 @@ public class ScoreWorld implements IWorld {
 		p.fill(text);
 		p.textSize(size);
 		p.text("Congrats!", Xpos, Ypos);
-		p.text(percent(), Xpos, Ypos + 50);
+		p.text(pf.averageHit(), Xpos, Ypos + 50);
 		return p;
 	}
-	public float percent() {
-		int score = pf.getScore();
-		int max = pf.getNoteArray().size();
-		
-		return score/max;
-		
-	}
+
 	public IWorld mousePressed(MouseEvent mev) {
 		return new LevelSelectWorld(p);
 	}
