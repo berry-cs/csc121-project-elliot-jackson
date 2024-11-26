@@ -11,6 +11,8 @@ public class LevelSelectWorld implements IWorld{
 	ArrayList<Song.Info> songList;
 	int index;
 	PApplet p;
+	RenderObject gameRender;
+	KeyManager km = new KeyManager();
 	
 	public LevelSelectWorld(PApplet p) {
 		this.p = p;
@@ -18,11 +20,15 @@ public class LevelSelectWorld implements IWorld{
 		songList = Song.getSongList("data/levels");
 		
 		index = 0;
+		
+		RenderList rl = new RenderList(p);
+		rl.createAdd("data/images/chalkboard.jpg", p.width, p.height);
+		gameRender = rl;
 	}
 	
 	public PApplet draw(PApplet p) {
-		p.background(200);
-		p.fill(0);
+		gameRender.render();
+		p.fill(255);
 		int pos = 200;
 		for(Song.Info i : Song.getSongList("data/levels")) {
 			p.text(i.title(), 300, pos);
@@ -42,6 +48,8 @@ public class LevelSelectWorld implements IWorld{
 	}
 	
 	public IWorld keyPressed(KeyEvent kev) {
+		km.press(kev);
+		
 		switch(kev.getKey()) {
 		case 'w':
 			index = Math.max(index-1, 0);
