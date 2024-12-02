@@ -21,7 +21,8 @@ public class StartWorld implements IWorld {
 		gameRender.render();
 		p.fill(255, 255, 255);
 		p.textSize(32);
-		p.text("Press Enter to Start", 275, 250);
+		p.text("Rhythym Legends", 275, 250);
+		p.text("Press enter to Start", 275, 300);
 		return p;
 	}
 
